@@ -5,6 +5,7 @@ import mathanim.color.ColorPalette;
 import processing.core.PApplet;
 
 public class XYGrid {
+	/**Makes a 2D Grid of desired color*/
 	/*Declare global variables.*/
 	/**Initialize all variables.
 	 * @param		sketch		Processing Applet
@@ -29,7 +30,7 @@ public class XYGrid {
 	public XYGrid(PApplet sketch,String grid_col, String axis_col, int height, int width) {
 		/**
 		 * @usage	XYGrid object;
-		 * @setup	Object =  = new XYGrid(this, "Grid Line Color", "Axis Line Color", height, width);
+		 * @setup	Object = new XYGrid(this, "Grid Line Color", "Axis Line Color", height, width);
 		 * @draw	Object.AnimateXYGrid();	*/
 		/**Assign the current object to all the variables declared using "this" keyword.*/
 		this.sketch = sketch;
@@ -64,15 +65,15 @@ public class XYGrid {
 			}
 		/*Animating lines for x axis*/
 		for(int y = 0 ; y < height ; y+= 150) {
-				//Sketch the main grid lines thicker.
-				sketch.strokeWeight(4);
-				sketch.line(0, y_origin + y, x_speed, y_origin + y);
-				sketch.line(0, y_origin - y, x_speed, y_origin - y);
-				sketch.stroke(grid.getRed(), grid.getGreen(), grid.getBlue());
-				//Sketch the intermediate grid lines thinner.
-				sketch.strokeWeight((float) 0.5);
-				sketch.line(0, y_origin + y + 75, x_speed, y_origin + y + 75);
-				sketch.line(0, y_origin - y - 75, x_speed, y_origin - y - 75);
+			//Sketch the main grid lines thicker.
+			sketch.strokeWeight(4);
+			sketch.line(0, y_origin + y, x_speed, y_origin + y);
+			sketch.line(0, y_origin - y, x_speed, y_origin - y);
+			sketch.stroke(grid.getRed(), grid.getGreen(), grid.getBlue());
+			//Sketch the intermediate grid lines thinner.
+			sketch.strokeWeight((float) 0.5);
+			sketch.line(0, y_origin + y + 75, x_speed, y_origin + y + 75);
+			sketch.line(0, y_origin - y - 75, x_speed, y_origin - y - 75);
 
 			
 			
@@ -82,6 +83,12 @@ public class XYGrid {
 		sketch.strokeWeight(4);
 		sketch.line(0, y_origin, x_speed, y_origin);
 		sketch.line(x_origin, 0, x_origin, y_speed);
+		
+		//**Applet window exit protocol*/
+		if (x_speed>height+width) {
+			System.exit(0);
+		}
+		
 		
 	}
 
