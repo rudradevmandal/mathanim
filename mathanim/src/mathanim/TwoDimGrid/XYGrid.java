@@ -55,7 +55,7 @@ public class XYGrid {
 			x_speed += 1.6;
 			//Sketch the main grid lines thicker.
 			sketch.stroke(grid.getRed(), grid.getGreen(), grid.getBlue());
-			sketch.strokeWeight(4);
+			sketch.strokeWeight(2);
 			sketch.line(x_origin + x, 0, x_origin + x, y_speed);
 			sketch.line(x_origin - x, 0, x_origin - x, y_speed);
 			//Sketch the intermediate grid lines thinner.
@@ -66,7 +66,7 @@ public class XYGrid {
 		/*Animating lines for x axis*/
 		for(int y = 0 ; y < height ; y+= 150) {
 			//Sketch the main grid lines thicker.
-			sketch.strokeWeight(4);
+			sketch.strokeWeight(2);
 			sketch.line(0, y_origin + y, x_speed, y_origin + y);
 			sketch.line(0, y_origin - y, x_speed, y_origin - y);
 			sketch.stroke(grid.getRed(), grid.getGreen(), grid.getBlue());
@@ -80,7 +80,7 @@ public class XYGrid {
 		}
 		//Sketch the main axis lines.
 		sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
-		sketch.strokeWeight(4);
+		sketch.strokeWeight(2);
 		sketch.line(0, y_origin, x_speed, y_origin);
 		sketch.line(x_origin, 0, x_origin, y_speed);
 		
