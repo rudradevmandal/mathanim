@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import org.scilab.forge.jlatexmath.TeXConstants;
@@ -30,36 +31,45 @@ public class textanim {
 public String text;
 PApplet sketch;
 PImage img;
-int x, y, a, b;
-int x_speed = 0;
-int y_speed = 0;
-String file_name, keep;
-public PImage ImgTeX(PApplet sketch, String text,int size, String background, String highlight, int x, int y, String file_name){
+float x, y, a, b; 
+float x_speed = 0, y_speed = 0;
+int j = 0, i = 0;
+String background, highlight, file_name, keep;
+float size;
+public textanim(PApplet sketch, String text,float size, String background, String highlight, float x, float y, String file_name) {
+	/** This class take a LaTeX command and returns the path of the stored image file.
+	 * @param	sketch			Points to the current PApplet.		
+	 * @param 	text			Input LaTex Command.
+	 * @param 	file_name		Name of the image file
+	 * @param	size			Font size
+	 * @param	background		Text Color
+	 * @param	highlight		Text Highlight Color
+	 * 
+	 * @return	String			Path of the output filename
+	 * 
+	 * 
+	 * 
+	 * @usage	textanim object = new textanim();
+	 * @draw	object.ImgTeX(this,"Text to render", size, background, highlight, x, y, filename);*/ 
+		
+		/**Store the LaTeX command into a string.*/
+		this.text = text;
+		this.sketch = sketch;
+		this.size = size;
+		this.background = background;
+		this.highlight = highlight;
+		this.x = x;
+		this.y = y;
+		this.file_name = file_name;
+		
+}
+public void ImgTeX(String file_name){
 	
-/** This class take a LaTeX command and returns the path of the stored image file.
- * @param	sketch			Points to the current PApplet.		
- * @param 	text			Input LaTex Command.
- * @param 	file_name		Name of the image file
- * @param	size			Font size
- * @param	background		Text Color
- * @param	highlight		Text Highlight Color
- * 
- * @return	String			Path of the output filename
- * 
- * 
- * 
- * @usage	textanim object = new textanim();
- * @draw	object.ImgTeX(this,"Text to render", size, background, highlight, x, y, filename);*/ 
-	
-	/**Store the LaTeX command into a string.*/
-	this.text = text;
-	this.sketch = sketch;
-	this.file_name = file_name;
-	ColorPalette c = new ColorPalette();
-	/**Convert the LaTeX command to the particular expression using JLaTeXMath library*/
+ColorPalette c = new ColorPalette();
+	/**Renders the LaTeX command to the particular expression using JLaTeXMath library*/
 	TeXFormula fomule = new TeXFormula(text);
 	TeXIcon ti = fomule.createTeXIcon(
-	TeXConstants.STYLE_DISPLAY, size);
+	TeXConstants.STYLE_DISPLAY, (float) size);
 	/**Create a BufferredImage of the rendered expression.*/
 	BufferedImage bi = new BufferedImage(ti.getIconWidth(), ti
 	    .getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
@@ -86,16 +96,114 @@ public PImage ImgTeX(PApplet sketch, String text,int size, String background, St
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	
+}
+
+public void drawtext(String file_name) {
 	//Load the image file
-	img = sketch.loadImage(file_name +".png");
-	//Load the image for display
-	sketch.image(img, x, y);
-	return img;
+		img = sketch.loadImage(file_name +".png");
+		//Load the image for display
+		sketch.image(img, x, y);
+}
+
+public void animatetext(String file_name) {
+	//Crr=eates the animation of writing on keyboard.
+	String[] split = new String[1000];
+	String test = "";
+	char [] characters = text.toCharArray();
+	textanim t;
+	if (i < characters.length) {
+			x_speed = 0;
+			for (i=0;i<characters.length;i++) {
+				test = test.concat(Character.toString(characters[i]));
+				try {
+					if(j==0) {
+						t = new textanim(sketch,test,80,"black","transparent", 100, 100 , file_name + j);
+						t.ImgTeX(file_name + j);
+						split[j] = test;
+						j++;
+					}else {
+						t = new textanim(sketch,test,80,"black","transparent", 100 , 100, file_name + j);
+						t.ImgTeX(file_name + j);
+						split[j] = test;
+						j++;
+					}
+					
+				}catch(Exception e) {
+				
+				}
+				
+//				System.out.println(split[j-1]);
+//				System.out.println(test);
+//				System.out.println(characters.length);
+//				System.out.println(j);
+//				System.out.println(i);
+//				System.out.println(x_speed);
+			}
+		
+		
+
+	}else {
+		if (x_speed<j) {
+			drawtext(file_name+x_speed);
+			x_speed++;
+		}else {
+			drawtext(file_name+(x_speed-1));
+		}
+		
+	}
 
 	
 }
-public void movetext(PApplet sketch,PImage im, int x, int y, int a, int b, String keep) {
+
+public void backspace(String file_name) {
+	//Create the animation of pressing backspace on keyboard.
+	String[] split = new String[1000];
+	String test = "";
+	char [] characters = text.toCharArray();
+	textanim t;
+	if (j < characters.length) {
+		x_speed = characters.length-1;
+		
+			for (int i=0;i<characters.length;i++) {
+				test = test.concat(Character.toString(characters[i]));
+				try {
+					if(j==0) {
+						t = new textanim(sketch,test,80,"black","transparent", 100, 100 , file_name + j);
+						t.ImgTeX(file_name + j);
+						split[(int) j] = Character.toString(characters[(int) j]);
+						j++;
+					}else {
+						t = new textanim(sketch,test,80,"black","transparent", 100 , 100, file_name + j);
+						t.ImgTeX(file_name + j);
+						split[(int) j] = split[(int) (j-1)].concat(Character.toString(characters[j]));
+						j++;
+					}
+					
+				}catch(Exception e) {
+					//j--;
+				
+				}
+				
+//				System.out.println(split[i]);
+//				System.out.println(characters.length);
+//				System.out.println(j);
+//				System.out.println(i);
+//				System.out.println(x_speed);
+			}
+		
+		
+
+	}else {
+		if (x_speed>0) {
+			drawtext(file_name+x_speed);
+			x_speed--;
+		}else {
+			
+		}
+		
+	}
+}
+public void movetext(String file_name, int x, int y, int a, int b, String keep) {
 	/**This class move the text object from (x,y) to (a,b)
 	 * @param 	sketch	Points to the current PApplet.
 	 * @param	im		The image vector of the object to be moved.
@@ -103,8 +211,9 @@ public void movetext(PApplet sketch,PImage im, int x, int y, int a, int b, Strin
 	 * @param	y		Y-coordinate of the object
 	 * @param	a		A-coordinate of the object
 	 * @param	b		B-coordinate of the object*/
-	this.img = im;
-	this.sketch = sketch;
+	//Load the image file
+	img = sketch.loadImage(file_name +".png");
+
 	if (keep == "copy") {
 		sketch.image(img, x, y);
 	}
