@@ -25,6 +25,7 @@ public class OneDGrid {
 	int j;
 	float stretch;
 	textanim text;
+	String file_name;
 	public OneDGrid( PApplet sketch, String col, String p_col, String o_col, float height, float width) {
 		/**Initialize all variables*/
 		this.col = col;
@@ -39,7 +40,7 @@ public class OneDGrid {
 		j = 1;
 		
 	}
-	public void AnimateOneDGrid(float x, float y) {
+	public int AnimateOneDGrid(float x, float y) {
 		/**Initializing the color, origin points and speed of animation.*/
 
 		axis = c.Colour(col);
@@ -54,6 +55,7 @@ public class OneDGrid {
 			sketch.strokeWeight(2);
 			sketch.line(x_o, y_o, x_o + anim_speed, y_o);
 			sketch.line(x_o, y_o, x_o - anim_speed, y_o);
+			return 1;
 
 		}else {
 			/**After the animation of the line.
@@ -62,6 +64,7 @@ public class OneDGrid {
 			sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
 			sketch.line(x_o, y_o, width, y_o);
 			sketch.line(x_o, y_o, 0, y_o);
+			return 0;
 			
 		}
 		
@@ -79,41 +82,38 @@ public class OneDGrid {
 		sketch.line(x_o, y_o, width, y_o);
 		sketch.line(x_o, y_o, 0, y_o);
 	}
-	public void markgrid(float x_o, float y_o) {
+	public void markgrid(float x_o, float y_o, String file_name) {
 		/**This function marks the points in the 1-D line using the origin as x_o and y_o*/
 		int j = 1;
+		x_o = x_o + width/2;
+		y_o = y_o + height/2;
 		//Mark all the points using a for loop
 		for (int i = 100; i< width; i+=100) {
 			sketch.stroke(pcol.getRed(), pcol.getGreen(), pcol.getBlue());
 			sketch.strokeWeight(7);
 			sketch.point(x_o + i, y_o);
 			sketch.point(x_o - i, y_o);
-			text = new textanim(sketch,Integer.toString(j),40, p_col,"transparent", x_o - 15 + i, y_o + 7 , "markgrid1");
-			text.ImgTeX("markgrid1");
-			text.drawtext("markgrid1");
-			text = new textanim(sketch,Integer.toString(-j),40, p_col,"transparent",x_o - 47 - i, y_o + 7, "markgrid2");
-			text.ImgTeX("markgrid2");
-			text.drawtext("markgrid2");
+			text = new textanim(sketch,Integer.toString(j),40, p_col,"transparent", x_o - 15 + i, y_o + 7 , file_name + 1);
+			text.ImgTeX(file_name + 1);
+			text.drawtext(file_name + 1);
+			text = new textanim(sketch,Integer.toString(-j),40, p_col,"transparent",x_o - 47 - i, y_o + 7, file_name + 2);
+			text.ImgTeX(file_name + 2);
+			text.drawtext(file_name + 2);
 			j++;
 		}
 		//Mark the origin
 		sketch.stroke(ocol.getRed(), ocol.getGreen(), ocol.getBlue());
 		sketch.strokeWeight(6);
-		text = new textanim(sketch,"0",40, o_col,"transparent", x_o - 15 , y_o + 5 , "markgrid_o");
-		text.ImgTeX("markgrid_o");
-		text.drawtext("markgrid_o");
+		text = new textanim(sketch,"0",40, o_col,"transparent", x_o - 15 , y_o + 5 , file_name + 0);
+		text.ImgTeX(file_name + 0);
+		text.drawtext(file_name + 0);
 		sketch.point(x_o, y_o);
 	}
 		
 	
-	public void movegrid(PApplet sketch, float x, float y, float a, float b) {
+	public int movegrid(float x, float y, float a, float b, String file_name) {
 		/**This function moves the 1-D line by a set amount.
 		 * Also, it animates the markings on the axis.*/
-		this.sketch = sketch;
-		this.x = x;
-		this.y = y;
-		this.a = a;
-		this.b = b;
 		axis = c.Colour(col);
 		pcol = c.Colour(p_col);
 		ocol = c.Colour(o_col);
@@ -128,6 +128,7 @@ public class OneDGrid {
 			sketch.strokeWeight(2);
 			sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
 			sketch.line(0 , y_o + y_speed, width , y_o + y_speed);
+
 		}else {
 			//Move the points only along the x-axis
 			x_speed += 2;
@@ -135,16 +136,23 @@ public class OneDGrid {
 			sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
 			sketch.line(0 , b, width , b);
 			if(x_o + x_speed < a) {
-				markgrid(x_o + x_speed, b);
+				markgrid(x_speed, b-y_o,file_name);
+				return 1;
 			}else {
-				markgrid(a,b);
+				markgrid(a-x_o,b-y_o,file_name);
+				return 0;
 			}
+		}
+		if(x_o + x_speed < a) {
+			return 1;
+		}else {
+			return 0;
 		}
 		
 		
 	}
 	
-	public void stretchgrid(float x, float y, float a) {
+	public int stretchgrid(float x, float y, float a, String file_name) {
 		/**Stretches the 1-D grid by amount "a".*/
 		axis = c.Colour(col);
 		pcol = c.Colour(p_col);
@@ -187,29 +195,33 @@ public class OneDGrid {
 //			System.out.println(a);
 		}
 		else if(stretch == a) {
-			//After stretching or shrinking, maintain its position and mark ll the points.
+			//After stretching or shrinking, maintain its position and mark all the points.
 			for (float i = a*100; i< width; i+=a*100) {
 				sketch.stroke(pcol.getRed(), pcol.getGreen(), pcol.getBlue());
 				sketch.strokeWeight(7);
 				sketch.point((float) (x_o + i), y_o);
 				sketch.point((float) (x_o - i), y_o);
-				text = new textanim(sketch,Integer.toString(j),40, p_col,"transparent", x_o - 15 + i, y_o + 7 , "markgrid1");
-				text.ImgTeX("markgrid1");
-				text.drawtext("markgrid1");
-				text = new textanim(sketch,Integer.toString(-j),40, p_col,"transparent",x_o - 47 - i, y_o + 7, "markgrid2");
-				text.ImgTeX("markgrid2");
-				text.drawtext("markgrid2");
+				text = new textanim(sketch,Integer.toString(j),40, p_col,"transparent", x_o - 15 + i, y_o + 7 , file_name + 1);
+				text.ImgTeX(file_name + 1);
+				text.drawtext(file_name + 1);
+				text = new textanim(sketch,Integer.toString(-j),40, p_col,"transparent",x_o - 47 - i, y_o + 7, file_name + 2);
+				text.ImgTeX(file_name + 2);
+				text.drawtext(file_name + 2);
 				j++;
-				System.out.println(stretch);
 			}
 			//Mark the origin
 			sketch.stroke(ocol.getRed(), ocol.getGreen(), ocol.getBlue());
 			sketch.strokeWeight(6);
-			text = new textanim(sketch,"0",40, o_col,"transparent", x_o - 15 , y_o + 5 , "markgrid_o");
-			text.ImgTeX("markgrid_o");
-			text.drawtext("markgrid_o");
+			text = new textanim(sketch,"0",40, o_col,"transparent", x_o - 15 , y_o + 5 , file_name + 0);
+			text.ImgTeX(file_name + 0);
+			text.drawtext(file_name + 0);
 			sketch.point(x_o, y_o);
 		}
+		if(stretch != a) {
+			return 1;
+		}else {
+			return 0;
+		}		
 
 	}
 

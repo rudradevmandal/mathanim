@@ -85,9 +85,9 @@ public class XYGrid {
 		sketch.line(x_origin, 0, x_origin, y_speed);
 		
 		//**Applet window exit protocol*/
-		if (x_speed>height+width) {
-			System.exit(0);
-		}
+//		if (x_speed>height+width) {
+//			System.exit(0);
+//		}
 		
 		
 	}

@@ -33,7 +33,7 @@ PApplet sketch;
 PImage img;
 float x, y, a, b; 
 float x_speed = 0, y_speed = 0;
-int j = 0, i = 0;
+int j = 0, i = 0,k;
 String background, highlight, file_name, keep;
 float size;
 public textanim(PApplet sketch, String text,float size, String background, String highlight, float x, float y, String file_name) {
@@ -61,6 +61,10 @@ public textanim(PApplet sketch, String text,float size, String background, Strin
 		this.x = x;
 		this.y = y;
 		this.file_name = file_name;
+		j = 0;
+		x_speed = 0;
+		i = 0;
+		k=0;
 		
 }
 public void ImgTeX(String file_name){
@@ -105,8 +109,8 @@ public void drawtext(String file_name) {
 		sketch.image(img, x, y);
 }
 
-public void animatetext(String file_name) {
-	//Crr=eates the animation of writing on keyboard.
+public int animatetext(String file_name) {
+	//Creates the animation of writing on keyboard.
 	String[] split = new String[1000];
 	String test = "";
 	char [] characters = text.toCharArray();
@@ -144,28 +148,33 @@ public void animatetext(String file_name) {
 
 	}else {
 		if (x_speed<j) {
-			drawtext(file_name+x_speed);
+			drawtext(file_name+(int) x_speed);
 			x_speed++;
 		}else {
-			drawtext(file_name+(x_speed-1));
+			drawtext(file_name+(int) (x_speed-1));
 		}
 		
+	}
+	if (x_speed<j) {
+		return 1;
+	}else {
+		return 0;
 	}
 
 	
 }
 
-public void backspace(String file_name) {
+public int backspace(String file_name) {
 	//Create the animation of pressing backspace on keyboard.
 	String[] split = new String[1000];
 	String test = "";
 	char [] characters = text.toCharArray();
 	textanim t;
-	if (j < characters.length) {
+	if (k < characters.length) {
 		x_speed = characters.length-1;
 		
-			for (int i=0;i<characters.length;i++) {
-				test = test.concat(Character.toString(characters[i]));
+			for (k=0;k<characters.length;k++) {
+				test = test.concat(Character.toString(characters[k]));
 				try {
 					if(j==0) {
 						t = new textanim(sketch,test,80,"black","transparent", 100, 100 , file_name + j);
@@ -194,16 +203,24 @@ public void backspace(String file_name) {
 		
 
 	}else {
-		if (x_speed>0) {
-			drawtext(file_name+x_speed);
-			x_speed--;
+		if (j>0) {
+			drawtext(file_name+(int)j);
+			j--;
+			return 1;
 		}else {
+			return 0;
 			
 		}
 		
 	}
+	if (j>0) {
+		return 1;
+	}else {
+		return 0;
+		
+	}
 }
-public void movetext(String file_name, int x, int y, int a, int b, String keep) {
+public int movetext(String file_name, int x, int y, int a, int b, String keep) {
 	/**This class move the text object from (x,y) to (a,b)
 	 * @param 	sketch	Points to the current PApplet.
 	 * @param	im		The image vector of the object to be moved.
@@ -221,10 +238,12 @@ public void movetext(String file_name, int x, int y, int a, int b, String keep) 
 	 * at the speed of x_speed and y_speed until  it reaches either of the coordinates.*/
 	if (x + x_speed > a || y + y_speed > b) {
 		sketch.image(img, a, b);
+		return 0;
 	}else {
 		x_speed += 5;
 		y_speed += 5;
 		sketch.image(img, x + x_speed, y + y_speed);
+		return 1;
 	}
 }
 
