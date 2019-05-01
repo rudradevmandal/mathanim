@@ -52,7 +52,7 @@ public class OneDGrid {
 		/**Animating a line using the speed defined.*/
 		if(x_o + anim_speed < width) {
 			sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
-			sketch.strokeWeight(2);
+			sketch.strokeWeight(5);
 			sketch.line(x_o, y_o, x_o + anim_speed, y_o);
 			sketch.line(x_o, y_o, x_o - anim_speed, y_o);
 			return 1;
@@ -60,7 +60,7 @@ public class OneDGrid {
 		}else {
 			/**After the animation of the line.
 			 * Drawing the 1-D axis and drawing points for labeling.*/
-			sketch.strokeWeight(2);
+			sketch.strokeWeight(5);
 			sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
 			sketch.line(x_o, y_o, width, y_o);
 			sketch.line(x_o, y_o, 0, y_o);
@@ -77,7 +77,7 @@ public class OneDGrid {
 		y_o = y+ height/2;
 		/**After the animation of the line.
 		 * Drawing the 1-D axis and drawing points for labeling.*/
-		sketch.strokeWeight(2);
+		sketch.strokeWeight(5);
 		sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
 		sketch.line(x_o, y_o, width, y_o);
 		sketch.line(x_o, y_o, 0, y_o);
@@ -90,21 +90,21 @@ public class OneDGrid {
 		//Mark all the points using a for loop
 		for (int i = 100; i< width; i+=100) {
 			sketch.stroke(pcol.getRed(), pcol.getGreen(), pcol.getBlue());
-			sketch.strokeWeight(7);
+			sketch.strokeWeight(10);
 			sketch.point(x_o + i, y_o);
 			sketch.point(x_o - i, y_o);
-			text = new textanim(sketch,Integer.toString(j),40, p_col,"transparent", x_o - 15 + i, y_o + 7 , file_name + 1);
+			text = new textanim(sketch,"\\textbf{"+Integer.toString(j)+"}",60, p_col,"transparent", x_o - 25 + i, y_o + 10 , file_name + 1);
 			text.ImgTeX(file_name + 1);
 			text.drawtext(file_name + 1);
-			text = new textanim(sketch,Integer.toString(-j),40, p_col,"transparent",x_o - 47 - i, y_o + 7, file_name + 2);
+			text = new textanim(sketch,"\\textbf{"+Integer.toString(-j)+"}",60, p_col,"transparent",x_o - 47 - i, y_o + 10, file_name + 2);
 			text.ImgTeX(file_name + 2);
 			text.drawtext(file_name + 2);
 			j++;
 		}
 		//Mark the origin
 		sketch.stroke(ocol.getRed(), ocol.getGreen(), ocol.getBlue());
-		sketch.strokeWeight(6);
-		text = new textanim(sketch,"0",40, o_col,"transparent", x_o - 15 , y_o + 5 , file_name + 0);
+		sketch.strokeWeight(10);
+		text = new textanim(sketch,"\\textbf{"+"0"+"}",60, o_col,"transparent", x_o - 25 , y_o + 10 , file_name + 0);
 		text.ImgTeX(file_name + 0);
 		text.drawtext(file_name + 0);
 		sketch.point(x_o, y_o);
@@ -125,14 +125,14 @@ public class OneDGrid {
 		//Move the line only along the y-axis
 		if(y_o + y_speed <b) {
 			y_speed += 2;
-			sketch.strokeWeight(2);
+			sketch.strokeWeight(5);
 			sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
 			sketch.line(0 , y_o + y_speed, width , y_o + y_speed);
 
 		}else {
 			//Move the points only along the x-axis
 			x_speed += 2;
-			sketch.strokeWeight(2);
+			sketch.strokeWeight(5);
 			sketch.stroke(axis.getRed(), axis.getGreen(), axis.getBlue());
 			sketch.line(0 , b, width , b);
 			if(x_o + x_speed < a) {
@@ -173,7 +173,7 @@ public class OneDGrid {
 		if(stretch != a) {
 			for (float i = (float) (stretch*100); i< width; i+=stretch*100) {
 				sketch.stroke(pcol.getRed(), pcol.getGreen(), pcol.getBlue());
-				sketch.strokeWeight(7);
+				sketch.strokeWeight(10);
 				sketch.point((float) (x_o + i), y_o);
 				sketch.point((float) (x_o - i), y_o);
 
@@ -189,7 +189,7 @@ public class OneDGrid {
 			a = (float) Math.round(a*1000)/1000;
 			//Mark the origin
 			sketch.stroke(ocol.getRed(), ocol.getGreen(), ocol.getBlue());
-			sketch.strokeWeight(6);
+			sketch.strokeWeight(10);
 			sketch.point(x_o, y_o);
 //			System.out.println(stretch);
 //			System.out.println(a);
@@ -198,21 +198,21 @@ public class OneDGrid {
 			//After stretching or shrinking, maintain its position and mark all the points.
 			for (float i = a*100; i< width; i+=a*100) {
 				sketch.stroke(pcol.getRed(), pcol.getGreen(), pcol.getBlue());
-				sketch.strokeWeight(7);
+				sketch.strokeWeight(10);
 				sketch.point((float) (x_o + i), y_o);
 				sketch.point((float) (x_o - i), y_o);
-				text = new textanim(sketch,Integer.toString(j),40, p_col,"transparent", x_o - 15 + i, y_o + 7 , file_name + 1);
+				text = new textanim(sketch,"\\textbf{"+Integer.toString(j)+"}",60, p_col,"transparent", x_o - 25 + i, y_o + 10 , file_name + 1);
 				text.ImgTeX(file_name + 1);
 				text.drawtext(file_name + 1);
-				text = new textanim(sketch,Integer.toString(-j),40, p_col,"transparent",x_o - 47 - i, y_o + 7, file_name + 2);
+				text = new textanim(sketch,"\\textbf{"+Integer.toString(-j)+"}",60, p_col,"transparent",x_o - 47 - i, y_o + 10, file_name + 2);
 				text.ImgTeX(file_name + 2);
 				text.drawtext(file_name + 2);
 				j++;
 			}
 			//Mark the origin
 			sketch.stroke(ocol.getRed(), ocol.getGreen(), ocol.getBlue());
-			sketch.strokeWeight(6);
-			text = new textanim(sketch,"0",40, o_col,"transparent", x_o - 15 , y_o + 5 , file_name + 0);
+			sketch.strokeWeight(10);
+			text = new textanim(sketch,"\\textbf{"+"0"+"}",60, o_col,"transparent", x_o - 25 , y_o + 10 , file_name + 0);
 			text.ImgTeX(file_name + 0);
 			text.drawtext(file_name + 0);
 			sketch.point(x_o, y_o);

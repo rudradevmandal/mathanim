@@ -38,14 +38,14 @@ public class helloworld extends PApplet{
 		xo = width/2;
 		yo = height/2;
 		 
-		  oneDaddSetup();
+		oneDlineSetup();
 		 
 		}
 	
 	public void draw(){
 		background(255);
 		
-		oneDadd();
+		oneDline();
 		  
 
 		  
