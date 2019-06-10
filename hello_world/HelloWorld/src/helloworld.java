@@ -1,11 +1,13 @@
 import java.awt.Color;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import com.hamoid.VideoExport;
 
 import mathanim.OneDimGrid.OneDGrid;
 import mathanim.TwoDimGrid.XYGrid;
 import mathanim.color.ColorPalette;
+import mathanim.common.common;
 import mathanim.text.textanim;
 import mathanim.video.VideoOut;
 import processing.core.PApplet;
@@ -24,9 +26,10 @@ public class helloworld extends PApplet{
 	String text,text1,text2,text3,text4,dir;
 	textanim tex;
 	Color col,col1;
-	int ani_grid,ani_tex,ani_texb,ani_texc,ani_gridb,ani_texd,ani_gridc,ani_texe,ani_tex3,ani_tex4,ani_tex2b,ani_tex3b,ani_tex4b;
+	int ani_grid,ani_tex,ani_texb,ani_texc,ani_gridb,ani_texd,ani_gridc,ani_texe,ani_tex3,ani_tex4,ani_tex2b,ani_tex3b,ani_tex4b,ani_num,ani_mul,ani_mulb;
 	File dir1;
 	ColorPalette c;
+	common com;
 	
 	
 	public void settings(){
@@ -38,14 +41,14 @@ public class helloworld extends PApplet{
 		xo = width/2;
 		yo = height/2;
 		 
-		oneDlineSetup();
+		oneDmulSetup();
 		 
 		}
 	
 	public void draw(){
 		background(255);
 		
-		oneDline();
+		oneDmul();
 		  
 
 		  
@@ -73,7 +76,7 @@ public class helloworld extends PApplet{
 		file1 = "C:\\Users\\rudra\\Desktop\\study\\hello_world\\text1_";
 		fileb = "C:\\Users\\rudra\\Desktop\\study\\hello_world\\textb_";
 		file2 = "C:\\Users\\rudra\\Desktop\\study\\hello_world\\text2_";
-		o = new OneDGrid(this, "blue","gray","pink", height, width);
+		o = new OneDGrid(this, "blue","gray","orange", height, width);
 		tex1 = new textanim(this,text,80,"black","transparent", (xo-300), (yo-200), file1);
 		tex2 = new textanim(this,text1,80,"black","transparent", (xo-300), (yo-200), file2);
 		ColorPalette c = new ColorPalette();
@@ -91,7 +94,7 @@ public class helloworld extends PApplet{
 	
 	public void oneDline() {
 		if(i<100) {
-			stroke(col.getRed(), col.getGreen(), col.getBlue());
+			stroke(col1.getRed(), col1.getGreen(), col1.getBlue());
 			strokeWeight(10);
 			point(xo, yo);
 
@@ -129,8 +132,8 @@ public class helloworld extends PApplet{
 		file_mark = "D:\\study\\hello_world\\oneDadd\\adding_mark";
 		dir1 = new File(dir);
 		//Initiaising the 1D lines
-		o1 = new OneDGrid(this, "blue","gray","pink", height, width);
-		o2 = new OneDGrid(this, "blue","gray","pink", height, width);
+		o1 = new OneDGrid(this, "blue","gray","orange", height, width);
+		o2 = new OneDGrid(this, "blue","gray","orange", height, width);
 		//Rendering the LaTeX text
 		tex = new textanim(this,text,80,"black","transparent", (xo-300), (yo-200), file1);
 		tex1 = new textanim(this,text1,80,"black","transparent", (xo-300), (yo-200), file1);
@@ -138,7 +141,8 @@ public class helloworld extends PApplet{
 		tex3 = new textanim(this,text3,80,"black","transparent", (xo-300), (yo-200), file1);
 		tex4 = new textanim(this,text4,80,"black","transparent", (xo-300), (yo-200), file1);
 		ColorPalette c = new ColorPalette();
-		col = c.Colour("pink");
+		col = c.Colour("orange");
+		com = new common(this,height,width);
 		//Initialising some dummy counting variables
 		test = 0;
 		i = 0;
@@ -159,6 +163,7 @@ public class helloworld extends PApplet{
 		ani_tex4b = 1;
 		ani_gridb = 1;
 		ani_gridc = 1;
+		ani_num = 1;
 		
 	}
 	public void oneDadd() {
@@ -211,34 +216,41 @@ public class helloworld extends PApplet{
 			o1.markgrid(400, 200,file_mark + "s");
 			ani_tex2b = tex2.backspace(file1);
 			dir1.delete();
-		}else if(ani_tex3 == 1){
+		}else if(ani_tex3 == 1 || ani_num == 1){
 			o1.staticgrid(0, 0);
 			o1.markgrid(0, 0,file_mark + "o");
 			o1.staticgrid(400, 200);
 			o1.markgrid(400, 200,file_mark + "s");
+			ani_num = com.dottedline(400, -200, 400, 0, "orange");
 			ani_tex3 = tex3.animatetext(file1);
-			stroke(col.getRed(), col.getGreen(), col.getBlue());
-			strokeWeight(2);
-			line(xo+400,yo, xo+400,yo+200);
+			
 			dir1.delete();
 		}else if(ani_tex3b == 1){
 			o1.staticgrid(0, 0);
 			o1.markgrid(0, 0,file_mark + "o");
 			o1.staticgrid(400, 200);
 			o1.markgrid(400, 200,file_mark + "s");
-			stroke(col.getRed(), col.getGreen(), col.getBlue());
-			strokeWeight(2);
-			line(xo+400,yo, xo+400,yo+200);
+			com.dottedline(400, -200, 400, 0, "orange");
+			
+
 			ani_tex3b = tex3.backspace(file1);
+			
 			dir1.delete();
-		}else if(ani_tex4 == 1){
+			try {
+				TimeUnit.MINUTES.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		if(ani_tex4 == 1){
 			o1.staticgrid(0, 0);
 			o1.markgrid(0, 0,file_mark + "o");
 			o1.staticgrid(400, 200);
 			o1.markgrid(400, 200,file_mark + "s");
 			stroke(col.getRed(), col.getGreen(), col.getBlue());
-			strokeWeight(2);
-			line(xo+400,yo, xo+400,yo+200);
+			com.dottedline(400, -200, 400, 0, "orange");
 			ani_tex4 = tex4.animatetext(file1);			
 			dir1.delete();
 		}else {
@@ -248,15 +260,164 @@ public class helloworld extends PApplet{
 			o1.markgrid(0, 0,file_mark + "o");
 			o1.staticgrid(400, 200);
 			o1.markgrid(400, 200,file_mark + "s");
-			stroke(col.getRed(), col.getGreen(), col.getBlue());
-			strokeWeight(2);
-			line(xo+400,yo, xo+400,yo+200);
+			com.dottedline(400, -200, 400, 0, "orange");
 			dir1.delete();
 			
 		}
 
 		video.start();
 		i++;
+	}
+	
+	public void oneDmulSetup() {
+		//Setting up text
+				text = "\\tt Multiplying\\ 2\\ x\\ 2...";
+				text1 = "\\tt Start\\ with\\ 1\\ x\\ 2";
+				text2 = "\\tt Then\\ multiply\\ 1\\ x\\ 2\\ x\\ 2";
+				text3 = "\\tt See\\ how\\ 1\\ lines\\ up\\ with\\ 4.";
+				text4 = "\\tt So\\ that's\\ our\\ answer.";
+				//Setting up the file directory
+				dir = "D:\\study\\hello_world\\oneDmul";
+				file1 = "D:\\study\\hello_world\\oneDmul\\multiplying";
+				file_mark = "D:\\study\\hello_world\\oneDmul\\multiplying_mark";
+				dir1 = new File(dir);
+				//Initiaising the 1D lines
+				o1 = new OneDGrid(this, "blue","gray","orange", height, width);
+				o2 = new OneDGrid(this, "blue","gray","orange", height, width);
+				//Rendering the LaTeX text
+				tex = new textanim(this,text,80,"black","transparent", (xo-300), (yo-200), file1);
+				tex1 = new textanim(this,text1,80,"black","transparent", (xo-300), (yo-200), file1);
+				tex2 = new textanim(this,text2,80,"black","transparent", (xo-300), (yo-200), file1);
+				tex3 = new textanim(this,text3,80,"black","transparent", (xo-300), (yo-200), file1);
+				tex4 = new textanim(this,text4,80,"black","transparent", (xo-300), (yo-200), file1);
+				ColorPalette c = new ColorPalette();
+				col = c.Colour("orange");
+				com = new common(this,height,width);
+				//Initialising some dummy counting variables
+				test = 0;
+				i = 0;
+				//Initialising the Video output
+				video = new VideoOut(this,"C:\\Users\\rudra\\Desktop\\study\\hello_world\\oneDmul\\oneDmul.mp4", 100 , 320, 60);
+				video.set();
+
+				ani_grid = 1;
+				ani_tex = 1;
+				ani_texb = 1;
+				ani_texc = 1;
+				ani_texd = 1;
+				ani_texe = 1;
+				ani_tex2b = 1;
+				ani_tex3 = 1;
+				ani_tex3b = 1;
+				ani_tex4 = 1;
+				ani_tex4b = 1;
+				ani_gridb = 1;
+				ani_gridc = 1;
+				ani_num = 1;
+				ani_mul = 1;
+				ani_mulb = 1;
+		
+	}
+	
+	public void oneDmul() {
+		//Waiting for the line to get animated
+		if(ani_grid == 1 || ani_tex == 1) {
+			ani_grid = o1.AnimateOneDGrid(0, 0);
+			ani_tex = tex.animatetext(file1);
+			dir1.delete();
+		}else if(ani_texb == 1) {
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			ani_texb = tex.backspace(file1);
+			dir1.delete();
+			
+			
+		}else if(ani_texc == 1) {
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			ani_texc = tex1.animatetext(file1);
+			dir1.delete();
+			
+		}
+		//Waiting for the second line to move
+		else if(ani_gridb == 1) {
+			tex1.ImgTeX(file1);
+			tex1.drawtext(file1);
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			ani_gridb = o1.movegrid(0, 0, 0, 200,file_mark+"s");
+		}else if(ani_mul == 1){
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			tex1.ImgTeX(file1);
+			tex1.drawtext(file1);
+			ani_mul = o1.stretchgrid(0, 200, 2, file_mark+"m");
+		}else if(ani_texd == 1){
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			o1.custommarkgrid(0, 200, 2, file_mark+"c");
+			ani_texd = tex1.backspace(file1);
+			dir1.delete();
+		}else if(ani_texe == 1) {
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			o1.custommarkgrid(0, 200, 2, file_mark+"c");
+			ani_texe = tex2.animatetext(file1);
+			dir1.delete();			
+		}else if(ani_mulb == 1){
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			tex2.ImgTeX(file1);
+			tex2.drawtext(file1);
+			ani_mulb = o1.stretchgrid(0, 200, 4, file_mark+"m1");
+		}else if(ani_tex2b == 1) {
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			o1.custommarkgrid(0, 200, 4, file_mark+"c");
+			ani_tex2b = tex2.backspace(file1);
+			dir1.delete();
+		}else if(ani_tex3 == 1) {
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			o1.custommarkgrid(0, 200, 4, file_mark+"c");
+			ani_tex3 = tex3.animatetext(file1);
+			com.dottedline(400, -200, 400, 0, "orange");
+			dir1.delete();
+		}else if(ani_tex3b == 1) {
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			o1.custommarkgrid(0, 200, 4, file_mark+"c");
+			ani_tex3b = tex3.backspace(file1);
+			com.dottedline(400, -200, 400, 0, "orange");
+			dir1.delete();
+		}
+		else if(ani_tex4 == 1) {
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			o1.custommarkgrid(0, 200, 4, file_mark+"c");
+			ani_tex4 = tex4.animatetext(file1);
+			com.dottedline(400, -200, 400, 0, "orange");
+			dir1.delete();
+		}else {
+			o1.staticgrid(0, 0);
+			o1.markgrid(0, 0,file_mark + "o");
+			o1.staticgrid(0,200);
+			o1.custommarkgrid(0, 200, 4, file_mark+"c");
+			tex4.ImgTeX(file1);
+			tex4.drawtext(file1);
+			com.dottedline(400, -200, 400, 0, "orange");
+		}
+		video.start();
+		i++;
+		
 	}
 
 

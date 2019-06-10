@@ -109,6 +109,33 @@ public class OneDGrid {
 		text.drawtext(file_name + 0);
 		sketch.point(x_o, y_o);
 	}
+	public void custommarkgrid(float x_o, float y_o, float a, String file_name) {
+		/**This function marks the points in the 1-D line using the origin as x_o and y_o*/
+		int j = 1;
+		x_o = x_o + width/2;
+		y_o = y_o + height/2;
+		//Mark all the points using a for loop
+		for (int i = (int) (100*a); i< width; i+=100*a) {
+			sketch.stroke(pcol.getRed(), pcol.getGreen(), pcol.getBlue());
+			sketch.strokeWeight(10);
+			sketch.point(x_o + i, y_o);
+			sketch.point(x_o - i, y_o);
+			text = new textanim(sketch,"\\textbf{"+Integer.toString(j)+"}",60, p_col,"transparent", x_o - 25 + i, y_o + 10 , file_name + 1);
+			text.ImgTeX(file_name + 1);
+			text.drawtext(file_name + 1);
+			text = new textanim(sketch,"\\textbf{"+Integer.toString(-j)+"}",60, p_col,"transparent",x_o - 47 - i, y_o + 10, file_name + 2);
+			text.ImgTeX(file_name + 2);
+			text.drawtext(file_name + 2);
+			j++;
+		}
+		//Mark the origin
+		sketch.stroke(ocol.getRed(), ocol.getGreen(), ocol.getBlue());
+		sketch.strokeWeight(10);
+		text = new textanim(sketch,"\\textbf{"+"0"+"}",60, o_col,"transparent", x_o - 25 , y_o + 10 , file_name + 0);
+		text.ImgTeX(file_name + 0);
+		text.drawtext(file_name + 0);
+		sketch.point(x_o, y_o);
+	}
 		
 	
 	public int movegrid(float x, float y, float a, float b, String file_name) {
@@ -158,7 +185,7 @@ public class OneDGrid {
 		pcol = c.Colour(p_col);
 		ocol = c.Colour(o_col);
 		x_o = x + width/2;
-		y_o = x + height/2;
+		y_o = y + height/2;
 
 		/**This function marks the points in the 1-D line using the origin as x_o and y_o*/
 		
