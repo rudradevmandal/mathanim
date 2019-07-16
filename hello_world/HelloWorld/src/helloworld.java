@@ -41,14 +41,14 @@ public class helloworld extends PApplet{
 		xo = width/2;
 		yo = height/2;
 		 
-		oneDmulSetup();
+		basisVecSetup();
 		 
 		}
 	
 	public void draw(){
 		background(255);
 		
-		oneDmul();
+		basisVec();
 		  
 
 		  
@@ -417,6 +417,36 @@ public class helloworld extends PApplet{
 		}
 		video.start();
 		i++;
+		
+	}
+	
+	
+	public void basisVecSetup() {
+		//Setting up text
+		text = "\\tt Basis\\ vector\\ along\\ positive\\ x\\ direction.";
+		//Setting up the file directory
+		dir = "C:\\Users\\rudra\\Desktop\\study\\hello_world\\basisVec";
+		file1 = "C:\\Users\\rudra\\Desktop\\study\\hello_world\\basisVec\\text";
+		file_mark = "C:\\Users\\rudra\\Desktop\\study\\hello_world\\basisVec\\mark";
+		dir1 = new File(dir);
+		//Initiaising the 1D lines
+		o1 = new OneDGrid(this, "blue","gray","orange", height, width);
+		//Rendering the LaTeX text
+		tex = new textanim(this,text,80,"black","transparent", (xo-800), (yo-200), file1);
+		com = new common(this,height,width);
+		//Initialising the Video output
+		video = new VideoOut(this,"C:\\Users\\rudra\\Desktop\\study\\hello_world\\basisVec\\basisVec.mp4", 100 , 320, 60);
+		video.set();
+		
+	}
+	
+	public void basisVec() {
+		tex.ImgTeX(file1);
+		tex.drawtext(file1);
+		o1.staticgrid(0, 0);
+		o1.markgrid(0, 0,file_mark + "o");
+		c = new ColorPalette();
+		com.arrow(0, 0, 100, 0, "orange");
 		
 	}
 
