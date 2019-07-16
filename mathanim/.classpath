@@ -12,5 +12,7 @@
 	<classpathentry kind="lib" path="C:/Users/rudra/Desktop/VideoExport/library/VideoExport.jar"/>
 	<classpathentry kind="lib" path="C:/Users/rudra/Desktop/VideoExport/library/jna.jar"/>
 	<classpathentry kind="lib" path="C:/Users/rudra/Desktop/VideoExport/library/jna-platform.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rudra/.m2/repository/com/aspose/aspose-pdf/19.6/aspose-pdf-19.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rudra/.m2/repository/com/aspose/aspose-pdf/19.6/aspose-pdf-19.6-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
