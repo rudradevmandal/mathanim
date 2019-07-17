@@ -447,7 +447,7 @@ public class helloworld extends PApplet{
 		o1.markgrid(0, 0,file_mark + "o");
 		c = new ColorPalette();
 		com.arrow(0, 0, 100, 0, "orange");
-		
+		video.start();
 	}
 
 
