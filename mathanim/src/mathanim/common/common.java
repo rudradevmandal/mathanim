@@ -135,12 +135,12 @@ public class common {
 		col_point = c.Colour(col);
 
 		sketch.stroke(col_point.getRed(), col_point.getGreen(), col_point.getBlue());
-		sketch.strokeWeight(4);
+		sketch.strokeWeight(5);
 		sketch.line(x1, y1, x2, y2);
 		// draw a triangle at (x2, y2)
 		sketch.pushMatrix();
 		sketch.translate(x2, y2);
-		float a = sketch.atan2(x1-x2, y2-y1);
+		float a = PApplet.atan2(x1-x2, y2-y1);
 		sketch.rotate(a);
 		sketch.line(0, 0, -10, -10);
 		sketch.line(0, 0, 10, -10);
